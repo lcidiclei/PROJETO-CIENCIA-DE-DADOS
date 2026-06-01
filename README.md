@@ -1,12 +1,12 @@
 # PROJETO-CIENCIA-DE-DADOS
-# Previsão Inteligente de Reabastecimento de Estoque com Base no Histórico de Compras
+-- Previsão Inteligente de Reabastecimento de Estoque com Base no Histórico de Compras --
 
 - Integrantes
 
 * Iago Baldini dos Santos
-* Lucas Uriel Diniz
-* Alexandre Luis Teixeira
-* Lucas Cidiclei Pereira
+* Lucas Uriel Diniz Queiroz
+* Alexandre Luis Teixeira Santos
+* Lucas Cidiclei Pereira da Silva
 
 - Sobre o projeto
 
@@ -97,7 +97,7 @@ reports/
 Clone o repositório:
 
 
-git clone URL_DO_REPOSITORIO
+git clone [URL_DO_REPOSITORIO](https://github.com/lcidiclei/PROJETO-CIENCIA-DE-DADOS.git)
 
 
 Entre na pasta:
