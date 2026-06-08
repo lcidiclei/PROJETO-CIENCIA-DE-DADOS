@@ -76,6 +76,7 @@ Modelos utilizados:
 
 * Linear Regression
 * Random Forest Regressor
+* Gradient Boosting Regressor
 
 ### 6. Avaliação
 
