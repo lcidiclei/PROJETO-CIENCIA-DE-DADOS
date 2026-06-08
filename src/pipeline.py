@@ -1,29 +1,37 @@
 from features import carregar_dataset, criar_features
 from split import split_temporal
 from train import treinar_modelos
-from evaluate import plot_previsao
+from evaluate import plot_resultados
+
+
+FEATURES = [
+    'day',
+    'month',
+    'year',
+    'dayofweek',
+    'weekofyear',
+    'is_weekend',
+    'quarter',
+    'lag_1',
+    'lag_7',
+    'lag_30',
+    'rolling_mean_7',
+    'rolling_mean_30',
+    'rolling_std_7',
+    'trend'
+]
 
 
 def pipeline_completo(df):
 
-    df = criar_features(df)
+    df_feat = criar_features(df)
 
-    train, test = split_temporal(df)
+    train, test = split_temporal(df_feat)
 
-    features = [
-        'day',
-        'month',
-        'dayofweek',
-        'weekofyear',
-        'lag_1',
-        'lag_7',
-        'rolling_mean_7'
-    ]
-
-    X_train = train[features]
+    X_train = train[FEATURES]
     y_train = train['sales']
 
-    X_test = test[features]
+    X_test = test[FEATURES]
     y_test = test['sales']
 
     resultados = treinar_modelos(
@@ -33,20 +41,29 @@ def pipeline_completo(df):
         y_test
     )
 
-    melhor = min(
+    melhor_nome, melhor = min(
         resultados.items(),
-        key=lambda x: x[1]['RMSE']
+        key=lambda x: x[1]['SMAPE']
     )
 
-    return melhor[1]['modelo'], X_test, y_test
+    print(
+        f"Melhor modelo: "
+        f"{melhor_nome} "
+        f"(SMAPE={melhor['SMAPE']:.2f}%)"
+    )
+
+    return (
+        melhor['modelo'],
+        melhor['pred'],
+        X_test,
+        y_test
+    )
 
 
 if __name__ == "__main__":
 
-    df = carregar_dataset("train.csv")
+    df = carregar_dataset("data/train.csv")
 
-    modelo, X_test, y_test = pipeline_completo(df)
+    modelo, pred, X_test, y_test = pipeline_completo(df)
 
-    pred = modelo.predict(X_test)
-
-    plot_previsao(y_test, pred)
+    plot_resultados(y_test, pred)
