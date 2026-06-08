@@ -15,6 +15,15 @@ Este projeto foi desenvolvido para a disciplina de Ciência de Dados Aplicada co
 
 A proposta é utilizar técnicas de Machine Learning para auxiliar empresas no planejamento de estoque, reduzindo tanto a falta de produtos quanto o excesso de mercadorias armazenadas.
 
+## Funcionalidades
+
+- Previsão de demanda futura de produtos;
+- Comparação entre diferentes modelos de Machine Learning;
+- Rastreamento de experimentos utilizando MLflow;
+- Sugestão automática de reabastecimento de estoque;
+- Visualização gráfica dos resultados;
+- API para futuras integrações utilizando FastAPI.
+
 ## Problema
 
 Muitas empresas enfrentam dificuldades para decidir quando e quanto reabastecer seus estoques. Quando essa decisão é tomada apenas com base na experiência ou observação manual, podem ocorrer problemas como:
@@ -92,6 +101,11 @@ reports/
 * Git
 * GitHub
 * Docker
+* MLflow
+* Joblib
+* FastAPI
+* Uvicorn
+
 
 ## Como Executar
 
