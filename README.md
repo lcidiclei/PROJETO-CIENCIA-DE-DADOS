@@ -131,9 +131,9 @@ Substitua os valores abaixo pelos resultados obtidos em sua execução.
 
 | Modelo | MAE | RMSE | SMAPE (%) | R² |
 |----------|----------|----------|----------|----------|
-| Linear Regression | XX.XX | XX.XX | XX.XX | X.XXXX |
-| Random Forest | XX.XX | XX.XX | XX.XX | X.XXXX |
-| Gradient Boosting | XX.XX | XX.XX | XX.XX | X.XXXX |
+| Linear Regression | 7.07 | 9.24 | 14.07 | 0.9142 |
+| Random Forest | 6.49 | 8.51 | 12.68 | 0.9273 |
+| Gradient Boosting | 6.17 | 8.02 | 12.18 | 0.9355 |
 
 **Melhor modelo:** preencher após execução do notebook.
 
@@ -239,37 +239,39 @@ PROJETO-CIENCIA-DE-DADOS/
 ├── requirements.txt
 ├── Dockerfile
 ├── .gitignore
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
 ├── notebooks/
-│   └── ciencia_de_dados.ipynb
+│   ├── data/
+│   |   ├── raw/           # Dataset bruto (não versionado — ver download acima)
+│   |   └── processed/     # Dados transformados gerados pelo pipeline
+│   └── ciencia_de_dados.ipynb   # Notebook principal (executar no Colab)
 │
 ├── src/
-│   ├── forecasting.py
-│   ├── pipeline.py
-│   ├── loader.py
-│   ├── features.py
-│   ├── train.py
-│   ├── evaluation.py
-│   ├── statistics.py
-│   ├── visualization.py
+│   ├── preprocesseing.py  # Pré-processamento dos dados
+│   ├── forecasting.py     # Gera recomendação de estogagem
+│   ├── pipeline.py        # Faz a pipeline evitando dataleakage
+│   ├── loader.py          # Carregamento e download do dataset
+│   ├── features.py        # Vetorização dos dados
+│   ├── train.py           # Treinamento dos modelos
+│   ├── evaluate.py        # Métricas e testes estáticos
+│   ├── statistics.py      # Estáticas de coparação dos modelos
+│   ├── visualization.py   # Funções de plotagem
 │   └── __init__.py
 │
+├── experiments/
+│   └── experiments.csv    # Rastreio de experimentos com parâmetros e métricas
+|
 ├── models/
-│   └── modelo.pkl
+│   └── modelo.pkl         # Melhor modelo gerado pela MLM
 │
 ├── article/
-│   ├── artigo.md
-│   ├── referencias.bib
-│   ├── figures/
-│   └── tables/
+│   ├── artigo.md          # Artigo técnico-científico
+│   ├── referencias.bib    # Referências BibTeX
+│   ├── figures/           # Figuras geradas pelo pipeline
+│   └── tables/            # Tabelas de resultados
 │
 └── docs/
-    ├── decisoes-tecnicas.md
-    └── dicionario-de-dados.md
+    ├── decisoes-tecnicas.md    # Justificativas metodológicas
+    └── dicionario-de-dados.md  # Descrição das features e dataset
 ```
 
 ---
