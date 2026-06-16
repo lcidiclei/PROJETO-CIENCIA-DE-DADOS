@@ -1,8 +1,101 @@
-__pycache__/
-*.pyc
-.ipynb_checkpoints/
-.env
+# Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Ambientes virtuais
+
 venv/
 .venv/
+env/
+ENV/
+
+# Jupyter Notebook
+
+.ipynb_checkpoints/
+
+# Modelos treinados
+
+models/*.pkl
+models/*.joblib
+models/*.sav
+
+# MLflow
+
 mlruns/
-*.pkl
+mlartifacts/
+mlflow.db
+
+# Dados
+
+data/*.csv
+data/*.zip
+data/*.parquet
+data/*.xlsx
+
+# Kaggle
+
+kaggle.json
+
+# Logs
+
+*.log
+
+# Coverage / Testes
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Build
+
+build/
+dist/
+*.egg-info/
+
+# IDEs
+
+.vscode/
+.idea/
+
+# Sistema Operacional
+
+.DS_Store
+Thumbs.db
+
+# Docker
+
+*.tar
+
+# Arquivos temporários
+
+temp/
+tmp/
+*.tmp
+
+# Cache matplotlib
+
+.matplotlib/
+
+# Arquivos de experimentação
+
+wandb/
+tensorboard/
+runs/
+
+# Segredos e configurações locais
+
+.env
+.env.*
+secrets.json
+
+# Arquivos do Colab
+
+sample_data/
+
+# SQLite
+
+*.db
+*.sqlite
+*.sqlite3
