@@ -1,133 +1,310 @@
-# PROJETO CIÊNCIA DE DADOS
+# Previsão de Demanda e Reposição de Estoque com Machine Learning
 
-## Previsão Inteligente de Reabastecimento de Estoque com Base no Histórico de Compras
+**Projeto Final — Disciplina de Ciência de Dados**
 
-### Integrantes
+## Problema e Objetivo
 
-* Iago Baldini dos Santos
-* Lucas Uriel Diniz Queiroz
-* Alexandre Luis Teixeira Santos
-* Lucas Cidiclei Pereira da Silva
+Prever a demanda futura de produtos utilizando histórico de vendas e gerar sugestões automáticas de reposição de estoque.
 
-## Sobre o Projeto
+O objetivo é reduzir:
 
-Este projeto foi desenvolvido para a disciplina de Ciência de Dados Aplicada com o objetivo de prever a demanda futura de produtos utilizando dados históricos de vendas.
+- Ruptura de estoque
+- Excesso de produtos armazenados
+- Custos operacionais
+- Erros de planejamento
 
-A proposta é utilizar técnicas de Machine Learning para auxiliar empresas no planejamento de estoque, reduzindo tanto a falta de produtos quanto o excesso de mercadorias armazenadas.
+A previsão é realizada utilizando modelos de regressão supervisionada.
 
-## Funcionalidades
+**Métrica primária:** SMAPE (Symmetric Mean Absolute Percentage Error), por ser adequada para problemas de previsão de demanda.
 
-- Previsão de demanda futura de produtos;
-- Comparação entre diferentes modelos de Machine Learning;
-- Rastreamento de experimentos utilizando MLflow;
-- Sugestão automática de reabastecimento de estoque;
-- Visualização gráfica dos resultados;
-- API para futuras integrações utilizando FastAPI.
+---
 
-## Problema
+## Dataset
 
-Muitas empresas enfrentam dificuldades para decidir quando e quanto reabastecer seus estoques. Quando essa decisão é tomada apenas com base na experiência ou observação manual, podem ocorrer problemas como:
+**Demand Forecasting Dataset (Kaggle)**
 
-* Falta de produtos para venda;
-* Excesso de estoque;
-* Aumento dos custos de armazenamento;
-* Perda de vendas e de clientes.
+- 913.000 registros
+- 10 lojas
+- 50 produtos
+- Período: 2013–2017
 
-Com isso, buscamos criar um modelo capaz de analisar o histórico de vendas e gerar previsões que auxiliem esse processo de tomada de decisão.
+### Variáveis
 
-## Base de Dados
+| Variável | Descrição |
+|-----------|------------|
+| date | Data da venda |
+| store | Identificador da loja |
+| item | Identificador do produto |
+| sales | Quantidade vendida |
 
-Foi utilizado um conjunto de dados de previsão de demanda disponível no Kaggle, contendo informações sobre:
+### Download
 
-* Data da venda;
-* Loja;
-* Produto;
-* Quantidade vendida.
+O notebook realiza o download automaticamente do Kaggle quando as credenciais estiverem configuradas.
 
-## Etapas do Projeto
+---
 
-### 1. Carregamento dos Dados
+## Engenharia de Features
 
-Inicialmente os dados são carregados e verificados para garantir que a leitura foi realizada corretamente.
+Foram criadas variáveis temporais e estatísticas para capturar sazonalidade e comportamento histórico das vendas.
 
-### 2. Análise Exploratória
+### Features Temporais
 
-Foram realizadas análises para entender a estrutura do conjunto de dados, verificar possíveis valores ausentes e observar o comportamento das vendas ao longo do tempo.
+- day
+- month
+- year
+- dayofweek
+- weekofyear
+- quarter
+- is_weekend
 
-### 3. Engenharia de Atributos
+### Features de Histórico
 
-Foram criadas novas variáveis para auxiliar os modelos na identificação de padrões temporais:
+- lag_1
+- lag_7
+- lag_30
 
-* Dia
-* Mês
-* Dia da semana
-* Semana do ano
-* Lag de 1 dia
-* Lag de 7 dias
-* Média móvel de 7 dias
+### Features Estatísticas
 
-### 4. Divisão Temporal
+- rolling_mean_7
+- rolling_mean_30
+- rolling_std_7
 
-Os dados foram separados em treino e teste respeitando a ordem cronológica dos registros, evitando vazamento de informações futuras para o modelo.
+### Tendência
 
-### 5. Treinamento dos Modelos
+- trend
 
-Modelos utilizados:
+---
 
-* Linear Regression
-* Random Forest Regressor
-* Gradient Boosting Regressor
+## Modelos Avaliados
 
-### 6. Avaliação
+### Linear Regression
 
-O desempenho dos modelos foi avaliado utilizando a métrica RMSE (Root Mean Squared Error).
+Modelo baseline utilizado como referência para comparação.
+
+### Random Forest Regressor
+
+Parâmetros:
+
+```python
+n_estimators=200
+max_depth=10
+min_samples_leaf=5
+random_state=42
+```
+
+### Gradient Boosting Regressor
+
+Parâmetros:
+
+```python
+n_estimators=200
+learning_rate=0.05
+max_depth=5
+random_state=42
+```
+
+---
+
+## Métricas Utilizadas
+
+### MAE
+
+Mean Absolute Error (Erro Absoluto Médio).
+
+### RMSE
+
+Root Mean Squared Error (Raiz do Erro Quadrático Médio).
+
+### SMAPE
+
+Symmetric Mean Absolute Percentage Error.
+
+### R²
+
+Coeficiente de Determinação.
+
+---
+
+## Resultados
+
+Substitua os valores abaixo pelos resultados obtidos em sua execução.
+
+| Modelo | MAE | RMSE | SMAPE (%) | R² |
+|----------|----------|----------|----------|----------|
+| Linear Regression | XX.XX | XX.XX | XX.XX | X.XXXX |
+| Random Forest | XX.XX | XX.XX | XX.XX | X.XXXX |
+| Gradient Boosting | XX.XX | XX.XX | XX.XX | X.XXXX |
+
+**Melhor modelo:** preencher após execução do notebook.
+
+---
+
+## Validação Estatística
+
+Foi utilizado o **Teste de Wilcoxon** para verificar se a diferença entre os dois melhores modelos era estatisticamente significativa.
+
+### Hipóteses
+
+- H₀: Não existe diferença significativa entre os modelos.
+- H₁: Existe diferença significativa entre os modelos.
+
+### Nível de Significância
+
+```text
+α = 0.05
+```
+
+Interpretação:
+
+- p-value < 0.05 → diferença significativa.
+- p-value ≥ 0.05 → diferença não significativa.
+
+---
+
+## Visualizações Geradas
+
+O pipeline produz automaticamente os seguintes gráficos:
+
+### 1. Real vs Previsto
+
+Comparação entre valores reais e previstos.
+
+### 2. Comparação de Modelos
+
+Comparação do SMAPE obtido pelos modelos.
+
+### 3. Distribuição dos Resíduos
+
+Análise dos erros do modelo.
+
+### 4. Scatter Plot
+
+Relação entre valores reais e previstos.
+
+---
+
+## Instalação e Execução
+
+### Opção 1 — Docker
+
+Construir a imagem:
+
+```bash
+docker build -t previsao-estoque .
+```
+
+Executar o container:
+
+```bash
+docker run -p 8888:8888 previsao-estoque
+```
+
+Acesse:
+
+```text
+http://localhost:8888
+```
+
+---
+
+### Opção 2 — Google Colab
+
+1. Abrir o notebook no Google Colab.
+2. Executar todas as células em ordem.
+
+---
+
+### Opção 3 — Ambiente Local
+
+Instalar dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+Executar o notebook:
+
+```bash
+jupyter notebook
+```
+
+---
 
 ## Estrutura do Repositório
 
 ```text
-data/
-notebooks/
-src/
-models/
-reports/
+PROJETO-CIENCIA-DE-DADOS/
+│
+├── README.md
+├── requirements.txt
+├── Dockerfile
+├── .gitignore
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── notebooks/
+│   └── ciencia_de_dados.ipynb
+│
+├── src/
+│   ├── forecasting.py
+│   ├── pipeline.py
+│   ├── loader.py
+│   ├── features.py
+│   ├── train.py
+│   ├── evaluation.py
+│   ├── statistics.py
+│   ├── visualization.py
+│   └── __init__.py
+│
+├── models/
+│   └── modelo.pkl
+│
+├── article/
+│   ├── artigo.md
+│   ├── referencias.bib
+│   ├── figures/
+│   └── tables/
+│
+└── docs/
+    ├── decisoes-tecnicas.md
+    └── dicionario-de-dados.md
 ```
+
+---
+
+## Reprodutibilidade
+
+Todos os modelos utilizam:
+
+```python
+random_state=42
+```
+
+As métricas e parâmetros são registrados automaticamente utilizando **MLflow**.
+
+---
 
 ## Tecnologias Utilizadas
 
-* Python
-* Pandas
-* NumPy
-* Matplotlib
-* Scikit-Learn
-* Git
-* GitHub
-* Docker
-* MLflow
-* Joblib
-* FastAPI
-* Uvicorn
+- Python
+- Pandas
+- NumPy
+- Scikit-Learn
+- Matplotlib
+- SciPy
+- MLflow
+- Joblib
+- Docker
 
+---
 
-## Como Executar
+## Limitações
 
-Clone o repositório:
+- Não foi realizada busca exaustiva de hiperparâmetros.
+- O modelo utiliza apenas histórico de vendas.
+- Não considera fatores externos como clima, promoções ou feriados.
+- Resultados dependem da qualidade dos dados históricos.
 
-```bash
-git clone https://github.com/lcidiclei/PROJETO-CIENCIA-DE-DADOS.git
-```
-
-Entre na pasta:
-
-```bash
-cd PROJETO-CIENCIA-DE-DADOS
-```
-
-Execute o projeto:
-
-```bash
-python src/pipeline.py
-```
-
-## Observação
-
-Este projeto possui finalidade exclusivamente acadêmica e foi desenvolvido como parte da avaliação da disciplina de Ciência de Dados Aplicada.
+Consulte `docs/decisoes tecnicas.md` para justificativas completas e `article/artigo.md` para a análise acadêmica detalhada.
