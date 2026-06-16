@@ -1,22 +1,13 @@
-import matplotlib.pyplot as plt
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    r2_score
+)
 
+def smape(y_true, y_pred):
+    y_true, y_pred = np.array(y_true), np.array(y_pred)
+    denominador = (np.abs(y_true) + np.abs(y_pred)) / 2
+    mask = denominador != 0
+    return np.mean(np.abs(y_true[mask] - y_pred[mask]) / denominador[mask]) * 100
 
-def plot_resultados(y_test, pred):
-
-    plt.figure(figsize=(12, 5))
-
-    plt.plot(
-        y_test.values[:200],
-        label='Real'
-    )
-
-    plt.plot(
-        pred[:200],
-        label='Previsto'
-    )
-
-    plt.legend()
-
-    plt.title("Real vs Previsto")
-
-    plt.show()
+mlflow.set_experiment("Previsao_Estoque")
