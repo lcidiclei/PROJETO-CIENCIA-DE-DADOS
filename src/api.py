@@ -1,17 +1,18 @@
-from fastapi import FastAPI
-
 app = FastAPI()
 
+modelo = joblib.load("models/modelo.pkl")
 
 @app.get("/")
 def home():
-    return {
-        "status": "API Online"
-    }
+    return {"status": "API funcionando"}
 
+@app.post("/predict")
+def predict(features: dict):
 
-@app.post("/prever")
-def prever(dados: dict):
+    df = pd.DataFrame([features])
+
+    previsao = modelo.predict(df)
+
     return {
-        "mensagem": "Implementar previsão usando o modelo treinado"
+        "previsao": float(previsao[0])
     }
